@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @Builder
-public class Option {
+public class Answer_Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

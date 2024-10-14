@@ -23,7 +23,7 @@ public class Question {
     private String questionText;
 
     @OneToMany
-    Set<Option> options;
+    Set<Answer_Option> options;
 
     @Column(nullable = false)
     private String correctAnswer;

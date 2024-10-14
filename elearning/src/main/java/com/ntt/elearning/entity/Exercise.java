@@ -21,7 +21,7 @@ public class Exercise {
 
     String title;
     String content;
-    int order;
+    int sequence_number;
 
     @ManyToMany
     Set<Question> questions;

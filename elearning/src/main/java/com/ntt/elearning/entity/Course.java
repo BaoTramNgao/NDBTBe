@@ -18,11 +18,9 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-
     String title;
     String description;
-    int order;
-    String thumbnail;
+    int sequence_number;
     String status;
 
     @ManyToMany

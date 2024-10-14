@@ -21,7 +21,7 @@ public class Lesson {
 
     String title;
     String content;
-    int order;
+    int sequence_number;
 
     @OneToMany
     Set<Course> coursesId;

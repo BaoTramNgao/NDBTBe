@@ -1,10 +1,8 @@
 package com.ntt.elearning.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,9 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Video {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-
     String title;
     String fileName;
     String url;
