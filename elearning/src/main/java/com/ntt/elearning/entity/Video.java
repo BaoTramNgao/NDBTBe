@@ -1,8 +1,8 @@
 package com.ntt.elearning.entity;
 
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.Id;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 public class Video {
     @Id
     String id;
+
     String title;
     String fileName;
     String url;

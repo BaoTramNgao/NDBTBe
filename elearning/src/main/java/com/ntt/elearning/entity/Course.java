@@ -18,6 +18,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+
     String title;
     String description;
     int sequence_number;
