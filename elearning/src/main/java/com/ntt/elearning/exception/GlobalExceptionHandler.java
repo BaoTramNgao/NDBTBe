@@ -1,6 +1,39 @@
 package com.ntt.elearning.exception;
 
+import java.nio.file.AccessDeniedException;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.ntt.elearning.dto.response.ApiResponse;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {}
+public class GlobalExceptionHandler {
+    @ExceptionHandler(value = RuntimeException.class)
+    ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(1000);
+        apiResponse.setMessage(exception.getMessage());
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(exception.getErrorCode().getCode());
+        apiResponse.setMessage(exception.getErrorCode().getMessage());
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED_;
+
+        return ResponseEntity.status(errorCode.getHttpStatusCode())
+                .body(ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build());
+    }
+}
