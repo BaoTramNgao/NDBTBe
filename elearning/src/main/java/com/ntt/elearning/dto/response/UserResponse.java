@@ -1,12 +1,12 @@
 package com.ntt.elearning.dto.response;
 
-import com.nht.identityservice.entity.Role;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.ntt.elearning.entity.Role;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)

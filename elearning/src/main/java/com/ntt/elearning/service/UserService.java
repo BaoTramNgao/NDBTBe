@@ -1,5 +1,13 @@
 package com.ntt.elearning.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.Constant.PredefindRole;
 import com.ntt.elearning.dto.request.UserCreationRequest;
@@ -12,17 +20,10 @@ import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.UserMapper;
 import com.ntt.elearning.repository.RoleRepository;
 import com.ntt.elearning.repository.UserRepository;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,10 +35,8 @@ public class UserService {
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
 
-
-    public UserResponse createUser(UserCreationRequest request){
-        if(repository.existsByUsername(request.getUsername()))
-            throw new AppException(ErrorCode.USER_ALREADY_EXISTED);
+    public UserResponse createUser(UserCreationRequest request) {
+        if (repository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_ALREADY_EXISTED);
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -48,13 +47,15 @@ public class UserService {
         return userMapper.toUserResponse(repository.save(user));
     }
 
-    public UserResponse getMyInfo(){
-var context = SecurityContextHolder.getContext();
+    public UserResponse getMyInfo() {
+        var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
-        return repository.findByUsername(name)
-               .map(userMapper::toUserResponse)
-               .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        return repository
+                .findByUsername(name)
+                .map(userMapper::toUserResponse)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
     }
+
     public UserResponse updateUser(String id, UserUpdateRequest request) {
         User user = repository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         userMapper.updateUser(user, request);
@@ -71,21 +72,16 @@ var context = SecurityContextHolder.getContext();
         repository.delete(user);
     }
 
-
     @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers() {
         log.info("In method get Users");
-        return repository.findAll().stream()
-                .map(userMapper::toUserResponse).toList();
+        return repository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
-
     ;
-
 
     @PostAuthorize("returnObject.username == authentication.name")
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(
                 repository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
-
 }
