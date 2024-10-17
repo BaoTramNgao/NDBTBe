@@ -22,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
     UserService userService;
 
-    @PostMapping
+    @PostMapping("/signup")
     ApiResponse<UserResponse> createUser(UserCreationRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
