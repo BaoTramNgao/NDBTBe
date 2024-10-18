@@ -36,24 +36,25 @@ public class UserService {
     RoleRepository roleRepository;
 
     public UserResponse createUser(UserCreationRequest request) {
+
         if (repository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_ALREADY_EXISTED);
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        HashSet<Role> roles = new HashSet<Role>();
+        HashSet<Role> roles = new HashSet<>();
         roleRepository.findById(PredefindRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+
         return userMapper.toUserResponse(repository.save(user));
     }
 
     public UserResponse getMyInfo() {
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
-        return repository
-                .findByUsername(name)
-                .map(userMapper::toUserResponse)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+
+        User user = repository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        return userMapper.toUserResponse(user);
     }
 
     public UserResponse updateUser(String id, UserUpdateRequest request) {

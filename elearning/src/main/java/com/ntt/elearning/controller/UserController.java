@@ -18,16 +18,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
+@RestController
+@RequestMapping("/users")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j
-@RestController
-@RequestMapping("/users")
 public class UserController {
     UserService userService;
 
-    @PostMapping("/login")
-    ApiResponse<UserResponse> createUser(UserCreationRequest request) {
+    @PostMapping()
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
                 .build();
