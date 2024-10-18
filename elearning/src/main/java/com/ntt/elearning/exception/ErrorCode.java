@@ -18,9 +18,9 @@ public enum ErrorCode {
     USER_NOT_EXISTED(406, "User not existed", HttpStatus.NOT_FOUND),
     USERNAME_INVALID(407, "User name must have at least 3 characters", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(408, "Password must have at least 8 characters", HttpStatus.BAD_REQUEST),
-    UNAUTHENTICATED(409, "User is not authenticated", HttpStatus.UNAUTHORIZED),
+    UNAUTHENTICATED(409, "User is not authenticated", HttpStatus.FORBIDDEN),
     UNCATEGORIZED_EXCEPTION(410, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    UNAUTHORIZED_(411, "You do not has permission", HttpStatus.FORBIDDEN),
+    UNAUTHORIZED_(411, "You do not has permission", HttpStatus.UNAUTHORIZED),
     USER_ALREADY_EXISTED(412, "User already exists", HttpStatus.CONFLICT),
     ;
     ;

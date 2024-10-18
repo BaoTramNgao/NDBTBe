@@ -29,12 +29,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Slf4j
 public class AuthenticationService {
     UserRepository userRepository;
 
@@ -44,10 +42,9 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var user = userRepository
                 .findByUsername(request.getUsername())
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        PasswordEncoder encoder = new BCryptPasswordEncoder(10);
-        boolean authenticated = encoder.matches(request.getPassword(), user.getPassword());
-
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         var token = generateToken(user);
@@ -59,20 +56,18 @@ public class AuthenticationService {
 
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
-                .issuer("ntt.com")
+                .issuer("nht.com")
                 .issueTime(new Date())
+                .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
                 .claim("scope", buildScope(user))
-                .expirationTime(
-                        new Date(Instant.now().plus(1, ChronoUnit.MONTHS).toEpochMilli()))
                 .build();
 
         Payload payload = new Payload(claimsSet.toJSONObject());
-        JWSObject jwtObject = new JWSObject(header, payload);
+        JWSObject jwsObject = new JWSObject(header, payload);
 
         try {
-            jwtObject.sign(new MACSigner(SINGER_KEY.getBytes()));
-
-            return jwtObject.serialize();
+            jwsObject.sign(new MACSigner(SINGER_KEY.getBytes()));
+            return jwsObject.serialize();
         } catch (JOSEException e) {
             e.printStackTrace();
         }
@@ -95,6 +90,7 @@ public class AuthenticationService {
 
     private String buildScope(User user) {
         StringJoiner stringJoiner = new StringJoiner(" ");
+
         if (!CollectionUtils.isEmpty(user.getRoles())) {
             user.getRoles().forEach(role -> {
                 stringJoiner.add("ROLE_" + role.getName());
