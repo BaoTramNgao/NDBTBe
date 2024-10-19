@@ -5,7 +5,11 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
+import java.util.UUID;
 
+import com.ntt.elearning.dto.request.LogoutRequest;
+import com.ntt.elearning.entity.InvalidatedToken;
+import com.ntt.elearning.repository.InvalidTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +39,7 @@ import lombok.experimental.NonFinal;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
     UserRepository userRepository;
-
+    InvalidTokenRepository invalidTokenRepository;
     @NonFinal
     protected static final String SINGER_KEY = "sDd3tkGGcBWFeKUZsqBgXGPx/dkcXehI8WcYobvUW1T7tLqgVsFHXDPotVIK2TL/";
 
@@ -60,6 +64,7 @@ public class AuthenticationService {
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
                 .claim("scope", buildScope(user))
+                .jwtID(UUID.randomUUID().toString())
                 .build();
 
         Payload payload = new Payload(claimsSet.toJSONObject());
@@ -74,17 +79,47 @@ public class AuthenticationService {
         return null;
     }
 
-    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
-        var token = request.getToken();
+    public void logout(LogoutRequest request) throws ParseException, JOSEException {
+        var signToken = verifyToken(request.getToken());
+
+        String jit = signToken.getJWTClaimsSet().getJWTID();
+        Date expiryTime=signToken.getJWTClaimsSet().getExpirationTime();
+
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jit)
+                .expiryTime(expiryTime)
+                .build();
+
+        invalidTokenRepository.save(invalidatedToken);
+    }
+
+    private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
+
         JWSVerifier verifier = new MACVerifier(SINGER_KEY.getBytes());
         SignedJWT signedJWT = SignedJWT.parse(token);
 
-        Date expityTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var verified = signedJWT.verify(verifier);
+        if(!(verified&&expiryTime.after(new Date())))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
 
+        if(invalidTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        return signedJWT;
+    }
+    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+        var token = request.getToken();
+
+        try {
+            verifyToken(token);
+        }catch (AppException a) {
+            return IntrospectResponse.builder()
+                    .valid(false)
+                    .build();
+        }
         return IntrospectResponse.builder()
-                .valid(verified && expityTime.after(new Date()))
+                .valid(true)
                 .build();
     }
 
