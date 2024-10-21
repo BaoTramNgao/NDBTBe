@@ -2,7 +2,6 @@ package com.ntt.elearning.controller;
 
 import java.text.ParseException;
 
-import com.ntt.elearning.dto.request.LogoutRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nimbusds.jose.JOSEException;
 import com.ntt.elearning.dto.request.AuthenticationRequest;
 import com.ntt.elearning.dto.request.IntrospectRequest;
+import com.ntt.elearning.dto.request.LogoutRequest;
 import com.ntt.elearning.dto.response.ApiResponse;
 import com.ntt.elearning.dto.response.AuthenticationResponse;
 import com.ntt.elearning.dto.response.IntrospectResponse;
@@ -41,8 +41,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    ApiResponse<Void> logout(@RequestBody LogoutRequest request)
-            throws ParseException, JOSEException {
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);
         return ApiResponse.<Void>builder().build();
     }

@@ -7,9 +7,6 @@ import java.util.Date;
 import java.util.StringJoiner;
 import java.util.UUID;
 
-import com.ntt.elearning.dto.request.LogoutRequest;
-import com.ntt.elearning.entity.InvalidatedToken;
-import com.ntt.elearning.repository.InvalidTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,11 +19,14 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.ntt.elearning.dto.request.AuthenticationRequest;
 import com.ntt.elearning.dto.request.IntrospectRequest;
+import com.ntt.elearning.dto.request.LogoutRequest;
 import com.ntt.elearning.dto.response.AuthenticationResponse;
 import com.ntt.elearning.dto.response.IntrospectResponse;
+import com.ntt.elearning.entity.InvalidatedToken;
 import com.ntt.elearning.entity.User;
 import com.ntt.elearning.exception.AppException;
 import com.ntt.elearning.exception.ErrorCode;
+import com.ntt.elearning.repository.InvalidTokenRepository;
 import com.ntt.elearning.repository.UserRepository;
 
 import lombok.AccessLevel;
@@ -40,6 +40,7 @@ import lombok.experimental.NonFinal;
 public class AuthenticationService {
     UserRepository userRepository;
     InvalidTokenRepository invalidTokenRepository;
+
     @NonFinal
     protected static final String SINGER_KEY = "sDd3tkGGcBWFeKUZsqBgXGPx/dkcXehI8WcYobvUW1T7tLqgVsFHXDPotVIK2TL/";
 
@@ -83,12 +84,10 @@ public class AuthenticationService {
         var signToken = verifyToken(request.getToken());
 
         String jit = signToken.getJWTClaimsSet().getJWTID();
-        Date expiryTime=signToken.getJWTClaimsSet().getExpirationTime();
+        Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
 
-        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
-                .id(jit)
-                .expiryTime(expiryTime)
-                .build();
+        InvalidatedToken invalidatedToken =
+                InvalidatedToken.builder().id(jit).expiryTime(expiryTime).build();
 
         invalidTokenRepository.save(invalidatedToken);
     }
@@ -101,26 +100,22 @@ public class AuthenticationService {
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var verified = signedJWT.verify(verifier);
-        if(!(verified&&expiryTime.after(new Date())))
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        if (!(verified && expiryTime.after(new Date()))) throw new AppException(ErrorCode.UNAUTHENTICATED);
 
-        if(invalidTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+        if (invalidTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         return signedJWT;
     }
+
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
 
         try {
             verifyToken(token);
-        }catch (AppException a) {
-            return IntrospectResponse.builder()
-                    .valid(false)
-                    .build();
+        } catch (AppException a) {
+            return IntrospectResponse.builder().valid(false).build();
         }
-        return IntrospectResponse.builder()
-                .valid(true)
-                .build();
+        return IntrospectResponse.builder().valid(true).build();
     }
 
     private String buildScope(User user) {

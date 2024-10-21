@@ -23,7 +23,7 @@ public class Lesson {
     String content;
     int sequence_number;
 
-    @OneToMany
+    @ManyToMany
     Set<Course> coursesId;
 
     @ManyToMany
