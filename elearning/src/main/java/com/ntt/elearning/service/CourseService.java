@@ -1,11 +1,9 @@
 package com.ntt.elearning.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ntt.elearning.dto.request.CourseCreationRequest;
 import com.ntt.elearning.entity.Course;
 import com.ntt.elearning.repository.CourseRepository;
 
@@ -22,11 +20,11 @@ public class CourseService {
 
     CourseRepository courseRepository;
 
-    public Course createCourse(CourseCreationRequest request) {}
+    // public Course createCourse(CourseCreationRequest request) {}
 
-    public Optional<Course> getCourseById(String id) {
-        return courseRepository.findById(id);
-    }
+    // public Optional<Course> getCourseById(String id) {
+    //     return courseRepository.findById(id);
+    // }
 
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
