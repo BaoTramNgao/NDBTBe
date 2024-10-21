@@ -1,2 +1,3 @@
-package com.ntt.elearning.dto.response;public class CourseResponse {
-}
+package com.ntt.elearning.dto.response;
+
+public class CourseResponse {}
