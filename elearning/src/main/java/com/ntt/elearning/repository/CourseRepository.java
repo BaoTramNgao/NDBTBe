@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.ntt.elearning.entity.Course;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, String> {}
+public interface CourseRepository extends JpaRepository<Course, String> {
+
+    boolean existsByCourseTitle(String course);
+}

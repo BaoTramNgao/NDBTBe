@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.ntt.elearning.dto.request.CourseRequest;
 import com.ntt.elearning.entity.Course;
 import com.ntt.elearning.service.CourseService;
 

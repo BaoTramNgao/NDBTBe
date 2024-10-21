@@ -21,7 +21,6 @@ public class Course {
 
     String title;
     String description;
-    int sequence_number;
     String status;
 
     @ManyToMany
