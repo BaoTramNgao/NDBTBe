@@ -32,7 +32,7 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    public Optional<Course> getCourseById(Long id) {
+    public Optional<Course> getCourseById(String id) {
         return courseRepository.findById(id);
     }
 
@@ -40,7 +40,7 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public void deleteCourse(Long id) {
+    public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
 }
