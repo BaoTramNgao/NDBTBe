@@ -1,17 +1,18 @@
 package com.ntt.elearning.service;
 
-import com.ntt.elearning.Repository.CourseRepository;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.ntt.elearning.dto.request.CourseRequest;
 import com.ntt.elearning.entity.Course;
+import com.ntt.elearning.repository.CourseRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +20,7 @@ import java.util.Optional;
 @Slf4j
 public class CourseService {
 
-    @Autowired
-    private  CourseRepository courseRepository;
+    CourseRepository courseRepository;
 
     public Course createCourse(CourseRequest request) {
         Course course = new Course();
@@ -36,11 +36,11 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
+
     public void deleteCourse(Long id) {
         courseRepository.deleteById(id);
     }
-    }
+}

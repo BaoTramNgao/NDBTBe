@@ -1,9 +1,7 @@
-package com.ntt.elearning.Repository;
+package com.ntt.elearning.repository;
 
-import com.ntt.elearning.entity.Result;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.ntt.elearning.entity.Result;
 
-public interface ResultRepository extends JpaRepository<Result, Long> {
-}
+public interface ResultRepository extends JpaRepository<Result, String> {}

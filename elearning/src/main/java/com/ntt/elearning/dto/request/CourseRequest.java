@@ -1,11 +1,12 @@
 package com.ntt.elearning.dto.request;
 
+import java.util.Set;
+
 import com.ntt.elearning.entity.Lesson;
 import com.ntt.elearning.entity.User;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)

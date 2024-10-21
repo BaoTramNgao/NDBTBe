@@ -1,10 +1,7 @@
-package com.ntt.elearning.Repository;
+package com.ntt.elearning.repository;
 
-import com.ntt.elearning.entity.Course;
-import com.ntt.elearning.entity.Lesson;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.ntt.elearning.entity.Lesson;
 
-public interface LessonRepository extends JpaRepository<Lesson, Long> {
-}
+public interface LessonRepository extends JpaRepository<Lesson, String> {}
