@@ -26,4 +26,7 @@ public class Course {
 
     @ManyToMany
     Set<User> userId;
+
+    @ManyToMany
+    Set<Lesson> lessonId;
 }

@@ -24,8 +24,5 @@ public class Lesson {
     int sequence_number;
 
     @ManyToMany
-    Set<Course> coursesId;
-
-    @ManyToMany
     Set<Video> videos;
 }
