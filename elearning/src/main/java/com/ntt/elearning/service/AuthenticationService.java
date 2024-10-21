@@ -20,6 +20,7 @@ import com.nimbusds.jwt.SignedJWT;
 import com.ntt.elearning.dto.request.AuthenticationRequest;
 import com.ntt.elearning.dto.request.IntrospectRequest;
 import com.ntt.elearning.dto.request.LogoutRequest;
+import com.ntt.elearning.dto.request.RefreshRequest;
 import com.ntt.elearning.dto.response.AuthenticationResponse;
 import com.ntt.elearning.dto.response.IntrospectResponse;
 import com.ntt.elearning.entity.InvalidatedToken;
@@ -116,6 +117,23 @@ public class AuthenticationService {
             return IntrospectResponse.builder().valid(false).build();
         }
         return IntrospectResponse.builder().valid(true).build();
+    }
+
+    public AuthenticationResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException {
+        var signJwt = verifyToken(request.getToken());
+
+        var jit = signJwt.getJWTClaimsSet().getJWTID();
+        var expiryTime = signJwt.getJWTClaimsSet().getExpirationTime();
+        InvalidatedToken invalidatedToken =
+                InvalidatedToken.builder().id(jit).expiryTime(expiryTime).build();
+
+        invalidTokenRepository.save(invalidatedToken);
+
+        var username = signJwt.getJWTClaimsSet().getSubject();
+        var user =
+                userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        var token = generateToken(user);
+        return AuthenticationResponse.builder().token(token).authenticated(true).build();
     }
 
     private String buildScope(User user) {

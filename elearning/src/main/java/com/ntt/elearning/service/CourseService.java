@@ -1,14 +1,16 @@
 package com.ntt.elearning.service;
 
 import java.util.List;
-import java.util.Optional;
 
+<<<<<<< HEAD
 import com.ntt.elearning.dto.request.CourseCreationRequest;
 import com.ntt.elearning.exception.AppException;
 import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.CourseMapper;
 import com.ntt.elearning.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+>>>>>>> cd38b6580962a6813d262f39a2f6a309e324f02f
 import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.entity.Course;
@@ -27,6 +29,7 @@ public class CourseService {
     CourseRepository courseRepository;
     CourseMapper courseMapper;
 
+<<<<<<< HEAD
     public Course createCourse(CourseCreationRequest request) {
         if(courseRepository.existsByCourseTitle(request.getTitle()))
             throw  new AppException(ErrorCode.TITLE_EXISTED);
@@ -37,6 +40,13 @@ public class CourseService {
     public Optional<Course> getCourseById(String id) {
         return courseRepository.findById(id);
     }
+=======
+    // public Course createCourse(CourseCreationRequest request) {}
+
+    // public Optional<Course> getCourseById(String id) {
+    //     return courseRepository.findById(id);
+    // }
+>>>>>>> cd38b6580962a6813d262f39a2f6a309e324f02f
 
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
