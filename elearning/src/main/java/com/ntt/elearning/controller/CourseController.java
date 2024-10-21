@@ -2,6 +2,7 @@ package com.ntt.elearning.controller;
 
 import java.util.List;
 
+import com.ntt.elearning.dto.request.CourseCreationRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("/courses")
-    Course createCourse(@RequestBody @Valid CourseRequest Course) {
+    Course createCourse(@RequestBody @Valid CourseCreationRequest Course) {
 
         return courseService.createCourse(Course);
     }

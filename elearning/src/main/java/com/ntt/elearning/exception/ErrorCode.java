@@ -22,8 +22,9 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(410, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     UNAUTHORIZED_(411, "You do not has permission", HttpStatus.UNAUTHORIZED),
     USER_ALREADY_EXISTED(412, "User already exists", HttpStatus.CONFLICT),
+    TITLE_EXISTED(413,"Title already exists", HttpStatus.BAD_REQUEST)
     ;
-    ;
+
     int code;
     String message;
     HttpStatusCode httpStatusCode;
