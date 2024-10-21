@@ -3,6 +3,9 @@ package com.ntt.elearning.controller;
 import java.util.List;
 
 import com.ntt.elearning.dto.request.CourseCreationRequest;
+import com.ntt.elearning.dto.response.ApiResponse;
+import com.ntt.elearning.dto.response.CourseResponse;
+import com.ntt.elearning.repository.CourseRepository;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +29,11 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("/courses")
-    Course createCourse(@RequestBody @Valid CourseCreationRequest Course) {
-
-        return courseService.createCourse(Course);
+    ApiResponse<Course> createCourse(@RequestBody @Valid CourseCreationRequest Course) {
+        Course course = courseService.createCourse(Course);
+        return ApiResponse.<Course>builder()
+                .result(course)
+                .build();
     }
 
     @GetMapping("/courses/allCourse")
