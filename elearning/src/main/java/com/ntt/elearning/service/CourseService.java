@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ntt.elearning.dto.request.CourseRequest;
+import com.ntt.elearning.dto.request.CourseCreationRequest;
 import com.ntt.elearning.entity.Course;
 import com.ntt.elearning.repository.CourseRepository;
 
@@ -22,15 +22,7 @@ public class CourseService {
 
     CourseRepository courseRepository;
 
-    public Course createCourse(CourseRequest request) {
-        Course course = new Course();
-        course.setTitle(request.getTitle());
-        course.setDescription(request.getDescription());
-        int sequence_number = Integer.parseInt(String.valueOf(request.getSequence_number()));
-        course.setSequence_number(request.getSequence_number());
-        course.setStatus(request.getStatus());
-        return courseRepository.save(course);
-    }
+    public Course createCourse(CourseCreationRequest request) {}
 
     public Optional<Course> getCourseById(String id) {
         return courseRepository.findById(id);

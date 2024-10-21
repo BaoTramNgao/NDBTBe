@@ -1,0 +1,10 @@
+[1mdiff --git a/elearning/src/main/java/com/ntt/elearning/dto/response/CourseResponse.java b/elearning/src/main/java/com/ntt/elearning/dto/response/CourseResponse.java[m
+[1mindex a30bbb5..eeac3f2 100644[m
+[1m--- a/elearning/src/main/java/com/ntt/elearning/dto/response/CourseResponse.java[m
+[1m+++ b/elearning/src/main/java/com/ntt/elearning/dto/response/CourseResponse.java[m
+[36m@@ -1,2 +1,3 @@[m
+[31m-package com.ntt.elearning.dto.response;public class CourseResponse {[m
+[31m-}[m
+[32m+[m[32mpackage com.ntt.elearning.dto.response;[m
+[32m+[m
+[32m+[m[32mpublic class CourseResponse {}[m
