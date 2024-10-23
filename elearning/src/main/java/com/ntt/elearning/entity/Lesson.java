@@ -25,6 +25,7 @@ public class Lesson {
 
     @ManyToMany
     Set<Video> videos;
+
     @ManyToMany
     Set<Exercise> exercises;
 }
