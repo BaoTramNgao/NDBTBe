@@ -9,5 +9,5 @@ import com.ntt.elearning.entity.Course;
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
     Course toCourse(CourseCreationRequest request);
-    CourseResponse toCourseResponse(CourseCreationRequest course);
+    CourseResponse toCourseResponse(Course course);
 }

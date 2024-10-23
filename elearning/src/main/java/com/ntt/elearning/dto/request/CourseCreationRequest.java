@@ -13,6 +13,4 @@ import lombok.experimental.FieldDefaults;
 public class CourseCreationRequest {
     String title;
     String description;
-    String status;
-    Set<String> lessonTitle;
 }

@@ -1,20 +1,20 @@
 package com.ntt.elearning.dto.response;
 
-import java.util.Set;
-
-import com.ntt.elearning.entity.Lesson;
-
+import com.ntt.elearning.entity.Video;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CourseResponse {
+public class LessonResponse {
     String id;
     String title;
     String description;
-    String status;
+    int sequence_number;
+    Set<Video> videos;
 }

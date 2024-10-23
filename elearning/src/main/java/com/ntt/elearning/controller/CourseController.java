@@ -20,7 +20,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/courses")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j
@@ -28,16 +28,18 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @PostMapping("/courses")
-    ApiResponse<Course> createCourse(@RequestBody @Valid CourseCreationRequest Course) {
-        Course course = courseService.createCourse(Course);
-        return ApiResponse.<Course>builder()
-                .result(course)
+    @PostMapping
+    ApiResponse<CourseResponse> createCourse(@RequestBody @Valid CourseCreationRequest request) {
+
+        return ApiResponse.<CourseResponse>builder()
+                .result(courseService.createCourse(request))
                 .build();
     }
 
-    @GetMapping("/courses/allCourse")
-    List<Course> getAllCourses() {
-        return courseService.getAllCourses();
+    @GetMapping
+    ApiResponse<List<CourseResponse>> getAllCourses(){
+        return ApiResponse.<List<CourseResponse>>builder()
+               .result(courseService.getAllCourses())
+               .build();
     }
 }

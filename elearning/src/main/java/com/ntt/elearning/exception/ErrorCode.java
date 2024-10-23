@@ -22,7 +22,11 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(410, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     UNAUTHORIZED_(411, "You do not has permission", HttpStatus.UNAUTHORIZED),
     USER_ALREADY_EXISTED(412, "User already exists", HttpStatus.CONFLICT),
-    TITLE_EXISTED(413,"Title already exists", HttpStatus.BAD_REQUEST)
+    TITLE_EXISTED(413,"Title already exists", HttpStatus.BAD_REQUEST),
+    EMAIL_INVALID(414, "Email is invalid", HttpStatus.BAD_REQUEST),
+    EMAIL_EXISTED(415, "Email already exists", HttpStatus.CONFLICT),
+    COURSE_NOT_FOUND(418,"Course not found",HttpStatus.NOT_FOUND),
+    LESSON_NOT_FOUND(422,"Course not found", HttpStatus.NOT_FOUND)
     ;
 
     int code;

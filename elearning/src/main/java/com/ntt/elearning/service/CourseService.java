@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import com.ntt.elearning.Constant.PredefindRole;
 import com.ntt.elearning.dto.request.CourseCreationRequest;
 import com.ntt.elearning.dto.response.CourseResponse;
 import com.ntt.elearning.dto.response.UserResponse;
@@ -33,33 +34,37 @@ public class CourseService {
     CourseRepository courseRepository;
     CourseMapper courseMapper;
     LessonRepository lessonRepository;
-
-    public Course createCourse(CourseCreationRequest request) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public CourseResponse createCourse(CourseCreationRequest request) {
         if(courseRepository.existsByCourseTitle(request.getTitle()))
             throw  new AppException(ErrorCode.TITLE_EXISTED);
         Course course = courseMapper.toCourse(request);
-        HashSet<Lesson> lessons = new HashSet<>();
-        for (String title : request.getLessonTitle()) {
-            lessonRepository.findBylessonTitle(title).ifPresent(lesson -> lessons.add(lesson));
-        }
-
-        course.setLessonId(lessons);
-        return courseRepository.save(course);
+        return courseMapper.toCourseResponse(courseRepository.save(course));
     }
-    /*@PreAuthorize("hasRole('ADMIN')")
-    public List<CourseResponse> createCourse() {
-        log.info("In method get Users");
+   @PreAuthorize("hasRole('ADMIN')")
+    public CourseResponse getCourseById(String id) {
+        return courseMapper.toCourseResponse(courseRepository.findCourseById(id));
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<CourseResponse> getAllCourses() {
         return courseRepository.findAll().stream().map(courseMapper::toCourseResponse).toList();
-    }*/
-    public Optional<Course> getCourseById(String id) {
-        return courseRepository.findById(id);
-    }
-
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
     }
 
     public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
+
+    public void addLessonToCourse(String courseId, String lessonId) {
+        var course = courseRepository.findById(courseId);
+        if (!course.isPresent()) {
+            throw new AppException(ErrorCode.COURSE_NOT_FOUND);
+        }
+        Optional<Lesson> lesson = lessonRepository.findLessonById(lessonId);
+        if (!lesson.isPresent()) {
+            throw new AppException(ErrorCode.LESSON_NOT_FOUND);
+        }
+        course.get().getLessonId().add(lesson.get());
+        courseRepository.save(course.get());
+    }
+
 }
