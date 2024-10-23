@@ -1,10 +1,11 @@
 package com.ntt.elearning.dto.response;
 
+import java.util.Set;
+
 import com.ntt.elearning.entity.Video;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

@@ -2,6 +2,7 @@ package com.ntt.elearning.entity;
 
 import java.util.Set;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -21,10 +22,8 @@ public class Result {
     String id;
 
     @ManyToMany
-    Set<User> userId;
-
+    Set<User> user;
     @ManyToMany
-    Set<Course> courseId;
-
-    double score;
+    Set<Course> course;
+    int score=0;
 }

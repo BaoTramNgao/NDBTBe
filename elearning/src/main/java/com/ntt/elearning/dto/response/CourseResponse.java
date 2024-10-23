@@ -1,9 +1,5 @@
 package com.ntt.elearning.dto.response;
 
-import java.util.Set;
-
-import com.ntt.elearning.entity.Lesson;
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
