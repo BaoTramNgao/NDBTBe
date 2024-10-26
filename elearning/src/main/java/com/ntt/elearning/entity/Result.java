@@ -24,7 +24,7 @@ public class Result {
     Set<User> user;
 
     @ManyToMany
-    Set<Course> course;
+    Set<Exercise> exercises;
 
     int score = 0;
 }
