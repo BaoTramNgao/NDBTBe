@@ -1,2 +1,3 @@
-package com.ntt.elearning.mapper;public class ExerciseMapper {
-}
+package com.ntt.elearning.mapper;
+
+public class ExerciseMapper {}

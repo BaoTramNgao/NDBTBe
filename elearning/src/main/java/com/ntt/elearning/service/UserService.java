@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.Constant.PredefindRole;
+import com.ntt.elearning.Constant.StatusConstant;
 import com.ntt.elearning.dto.request.UserCreationRequest;
 import com.ntt.elearning.dto.request.UserUpdateRequest;
 import com.ntt.elearning.dto.response.UserResponse;
@@ -36,16 +37,28 @@ public class UserService {
     RoleRepository roleRepository;
 
     public UserResponse createUser(UserCreationRequest request) {
-
         if (repository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_ALREADY_EXISTED);
         User user = userMapper.toUser(request);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         HashSet<Role> roles = new HashSet<>();
+
         roleRepository.findById(PredefindRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
 
+        return userMapper.toUserResponse(repository.save(user));
+    }
+
+    public UserResponse createTeacher(UserCreationRequest request) {
+        if (repository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_ALREADY_EXISTED);
+        User user = userMapper.toUser(request);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefindRole.TEACHER_ROLE).ifPresent(roles::add);
+
+        user.setRoles(roles);
+        user.setAccepted(StatusConstant.WAITING);
         return userMapper.toUserResponse(repository.save(user));
     }
 

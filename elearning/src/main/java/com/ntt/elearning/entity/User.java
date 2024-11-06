@@ -22,13 +22,15 @@ public class User {
 
     String username;
     String password;
-    String firstName;
-    String lastName;
+    String name;
     String email;
     LocalDate dob;
 
     @ManyToMany
     Set<Role> roles;
 
-    boolean accepted;
+    String accepted;
+
+    @ManyToMany
+    Set<Course> courses;
 }

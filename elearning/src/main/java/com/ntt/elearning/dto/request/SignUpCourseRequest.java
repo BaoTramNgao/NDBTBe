@@ -1,2 +1,3 @@
-package com.ntt.elearning.dto.request;public class SignUpCourseRequest {
-}
+package com.ntt.elearning.dto.request;
+
+public class SignUpCourseRequest {}

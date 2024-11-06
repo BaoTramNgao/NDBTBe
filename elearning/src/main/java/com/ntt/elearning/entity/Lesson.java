@@ -16,12 +16,11 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Lesson {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
     String title;
     String content;
-    int sequence_number;
+    String type;
 
     @ManyToMany
     Set<Video> videos;

@@ -16,7 +16,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Exercise {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
     String title;
@@ -25,4 +24,9 @@ public class Exercise {
 
     @ManyToMany
     Set<Question> questions;
+
+    @ManyToMany
+    Set<Category> categories;
+
+    int result;
 }

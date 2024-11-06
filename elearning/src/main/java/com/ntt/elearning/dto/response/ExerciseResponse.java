@@ -1,2 +1,3 @@
-package com.ntt.elearning.dto.response;public enum ExerciseResponse {
-}
+package com.ntt.elearning.dto.response;
+
+public enum ExerciseResponse {}

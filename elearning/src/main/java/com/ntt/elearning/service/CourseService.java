@@ -58,11 +58,11 @@ public class CourseService {
         if (!course.isPresent()) {
             throw new AppException(ErrorCode.COURSE_NOT_FOUND);
         }
-        Optional<Lesson> lesson = lessonRepository.findLessonById(lessonId);
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
         if (!lesson.isPresent()) {
             throw new AppException(ErrorCode.LESSON_NOT_FOUND);
         }
-        course.get().getLessonId().add(lesson.get());
+        course.get().getLessons().add(lesson.get());
         courseRepository.save(course.get());
     }
 }

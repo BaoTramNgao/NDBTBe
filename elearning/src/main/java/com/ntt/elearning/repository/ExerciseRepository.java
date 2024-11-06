@@ -1,2 +1,3 @@
-package com.ntt.elearning.repository;public class ExerciseRepository {
-}
+package com.ntt.elearning.repository;
+
+public class ExerciseRepository {}

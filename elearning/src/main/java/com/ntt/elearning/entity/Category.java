@@ -1,10 +1,7 @@
 package com.ntt.elearning.entity;
 
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,15 +13,11 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @Builder
-public class Result {
+public class Category {
     @Id
-    String id;
+    private String id;
 
-    @ManyToMany
-    Set<User> user;
-
-    @ManyToMany
-    Set<Exercise> exercises;
-
-    int score = 0;
+    private String type;
+    private String name;
+    private String keyword;
 }

@@ -16,7 +16,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
     String title;
@@ -24,5 +23,5 @@ public class Course {
     String status;
 
     @ManyToMany
-    Set<Lesson> lessonId;
+    Set<Lesson> lessons;
 }

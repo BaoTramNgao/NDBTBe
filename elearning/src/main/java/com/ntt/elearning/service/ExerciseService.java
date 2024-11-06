@@ -1,2 +1,3 @@
-package com.ntt.elearning.service;public class ExerciseService {
-}
+package com.ntt.elearning.service;
+
+public class ExerciseService {}

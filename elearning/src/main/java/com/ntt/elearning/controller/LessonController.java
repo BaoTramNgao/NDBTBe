@@ -1,2 +1,3 @@
-package com.ntt.elearning.controller;public class LessonController {
-}
+package com.ntt.elearning.controller;
+
+public class LessonController {}

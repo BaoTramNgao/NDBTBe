@@ -32,6 +32,13 @@ public class UserController {
                 .build();
     }
 
+    @PostMapping("/teacher")
+    ApiResponse<UserResponse> createTeacher(@RequestBody @Valid UserCreationRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.createTeacher(request))
+                .build();
+    }
+
     @GetMapping
     ApiResponse<List<UserResponse>> getUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
