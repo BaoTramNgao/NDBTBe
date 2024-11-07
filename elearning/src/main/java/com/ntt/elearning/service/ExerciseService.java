@@ -41,7 +41,7 @@ public class ExerciseService {
         exerciseRepository.deleteById(id);
     }
 
-    public void addQuestionToExercise(String exerciseId, long questionId) {
+    public void addQuestionToExercise(String exerciseId, String questionId) {
         Exercise exercise = exerciseRepository
                 .findById(exerciseId)
                 .orElseThrow(() -> new AppException(ErrorCode.EXERCISE_NOT_FOUND));
