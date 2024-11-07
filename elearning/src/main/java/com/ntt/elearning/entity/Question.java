@@ -16,15 +16,19 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-    @Column(nullable = false)
     private String questionText;
 
-    @ManyToMany
+    @OneToMany
     Set<Answer_Option> options;
+
+    @ManyToMany
+    Set<Category> categories;
 
     @Column(nullable = false)
     private String correctAnswer;
+
+    int score;
 }

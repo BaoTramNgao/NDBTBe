@@ -2,12 +2,12 @@ package com.ntt.elearning.controller;
 
 import java.util.List;
 
-import com.ntt.elearning.dto.request.SignUpCourseRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.ntt.elearning.dto.request.SignUpCourseRequest;
 import com.ntt.elearning.dto.request.UserCreationRequest;
 import com.ntt.elearning.dto.request.UserUpdateRequest;
 import com.ntt.elearning.dto.response.ApiResponse;
@@ -20,6 +20,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@RequestMapping("/users")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j
@@ -30,6 +31,13 @@ public class UserController {
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
+                .build();
+    }
+
+    @PostMapping("/teacher")
+    ApiResponse<UserResponse> createTeacher(@RequestBody @Valid UserCreationRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.createTeacher(request))
                 .build();
     }
 
@@ -70,8 +78,9 @@ public class UserController {
                 .result(userService.updateUser(userId, request))
                 .build();
     }
+
     @PutMapping("/signupcourse")
-    ApiResponse<UserResponse> signUpCourse(SignUpCourseRequest request){
+    ApiResponse<UserResponse> signUpCourse(SignUpCourseRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.signUpCourse(request))
                 .build();

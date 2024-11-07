@@ -1,13 +1,7 @@
 package com.ntt.elearning.dto.request;
 
-import com.ntt.elearning.entity.Question;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,5 +11,4 @@ import java.util.Set;
 public class ExerciseCreationRequest {
     long questionId;
     String title;
-
 }

@@ -1,13 +1,11 @@
 package com.ntt.elearning.dto.response;
 
+import java.util.Set;
+
 import com.ntt.elearning.entity.Question;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

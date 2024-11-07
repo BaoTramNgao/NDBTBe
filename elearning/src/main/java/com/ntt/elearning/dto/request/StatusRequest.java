@@ -8,6 +8,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SignUpCourseRequest {
-    String courseId;
+public class StatusRequest {
+    String status;
 }

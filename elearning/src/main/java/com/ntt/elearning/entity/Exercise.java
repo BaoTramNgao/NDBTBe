@@ -25,4 +25,9 @@ public class Exercise {
 
     @ManyToMany
     Set<Question> questions;
+
+    @ManyToMany
+    Set<Category> categories;
+
+    int result;
 }

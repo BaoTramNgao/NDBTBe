@@ -2,6 +2,7 @@ package com.ntt.elearning.dto.response;
 
 import java.util.Set;
 
+import com.ntt.elearning.entity.Exercise;
 import com.ntt.elearning.entity.Video;
 
 import lombok.*;
@@ -16,6 +17,7 @@ public class LessonResponse {
     String id;
     String title;
     String description;
-    int sequence_number;
+    String type;
     Set<Video> videos;
+    Set<Exercise> exercises;
 }

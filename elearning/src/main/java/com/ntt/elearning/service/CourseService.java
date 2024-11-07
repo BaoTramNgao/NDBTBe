@@ -47,6 +47,7 @@ public class CourseService {
                 .map(courseMapper::toCourseResponse)
                 .toList();
     }
+
     public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
@@ -60,7 +61,7 @@ public class CourseService {
         if (!lesson.isPresent()) {
             throw new AppException(ErrorCode.LESSON_NOT_FOUND);
         }
-        course.get().getLessonId().add(lesson.get());
+        course.get().getLessons().add(lesson.get());
         courseRepository.save(course.get());
     }
 }

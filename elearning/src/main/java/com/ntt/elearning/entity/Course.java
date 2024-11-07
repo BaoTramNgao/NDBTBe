@@ -24,5 +24,5 @@ public class Course {
     String status;
 
     @ManyToMany
-    Set<Lesson> lessonId;
+    Set<Lesson> lessons;
 }

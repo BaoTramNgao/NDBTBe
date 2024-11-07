@@ -21,7 +21,7 @@ public class Lesson {
 
     String title;
     String content;
-    int sequence_number;
+    String type;
 
     @ManyToMany
     Set<Video> videos;

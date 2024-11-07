@@ -1,13 +1,13 @@
-package com.ntt.elearning.dto.request;
+package com.ntt.elearning.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class SignUpCourseRequest {
-    String courseId;
+public class StatusResponse {
+    String status;
 }

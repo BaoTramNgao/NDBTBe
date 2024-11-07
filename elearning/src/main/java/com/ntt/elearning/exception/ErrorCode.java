@@ -30,7 +30,7 @@ public enum ErrorCode {
     EXERCISE_NOT_FOUND(423, "Exercises not found", HttpStatus.NOT_FOUND),
     EXERCISE_NOT_ENOUGH_QUESTIONS(424, "Not enough questions in exercise", HttpStatus.BAD_REQUEST),
     EXERCISE_ANSWER_NOT_CORRECT(425, "Incorrect answer", HttpStatus.BAD_REQUEST),
-    QUESTION_NOT_FOUND(426,"Question not found", HttpStatus.NOT_FOUND);
+    QUESTION_NOT_FOUND(426, "Question not found", HttpStatus.NOT_FOUND);
     int code;
     String message;
     HttpStatusCode httpStatusCode;
