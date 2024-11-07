@@ -32,14 +32,13 @@ public class CourseService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
-        if (courseRepository.existsByCourseTitle(request.getTitle())) throw new AppException(ErrorCode.TITLE_EXISTED);
         Course course = courseMapper.toCourse(request);
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse getCourseById(String id) {
-        return courseMapper.toCourseResponse(courseRepository.findCourseById(id));
+        return courseMapper.toCourseResponse(courseRepository.findById(id).get());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,7 +47,6 @@ public class CourseService {
                 .map(courseMapper::toCourseResponse)
                 .toList();
     }
-
     public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
@@ -58,7 +56,7 @@ public class CourseService {
         if (!course.isPresent()) {
             throw new AppException(ErrorCode.COURSE_NOT_FOUND);
         }
-        Optional<Lesson> lesson = lessonRepository.findLessonById(lessonId);
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
         if (!lesson.isPresent()) {
             throw new AppException(ErrorCode.LESSON_NOT_FOUND);
         }

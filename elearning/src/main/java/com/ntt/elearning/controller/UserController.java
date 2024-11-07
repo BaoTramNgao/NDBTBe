@@ -2,6 +2,7 @@ package com.ntt.elearning.controller;
 
 import java.util.List;
 
+import com.ntt.elearning.dto.request.SignUpCourseRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,6 +68,12 @@ public class UserController {
     ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody @Valid UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(userId, request))
+                .build();
+    }
+    @PutMapping("/signupcourse")
+    ApiResponse<UserResponse> signUpCourse(SignUpCourseRequest request){
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.signUpCourse(request))
                 .build();
     }
 }

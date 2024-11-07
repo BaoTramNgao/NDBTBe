@@ -2,6 +2,8 @@ package com.ntt.elearning.controller;
 
 import java.util.List;
 
+import com.ntt.elearning.dto.request.LessonCreationRequest;
+import com.ntt.elearning.entity.Lesson;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,16 @@ public class CourseController {
                 .build();
     }
 
-    @GetMapping
+    @GetMapping("/courses")
     ApiResponse<List<CourseResponse>> getAllCourses() {
         return ApiResponse.<List<CourseResponse>>builder()
                 .result(courseService.getAllCourses())
                 .build();
+    }
+    @GetMapping("/courses/{id}")
+    ApiResponse<CourseResponse> getCourseById(@PathVariable String id) {
+        return ApiResponse.<CourseResponse>builder()
+               .result(courseService.getCourseById(id))
+               .build();
     }
 }

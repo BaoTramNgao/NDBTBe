@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SignUpCourseReponse {
+public class SignUpCourseResponse {
     String id;
     String status;
 

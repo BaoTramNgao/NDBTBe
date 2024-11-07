@@ -30,13 +30,13 @@ public class LessonService {
     LessonMapper lessonMapper;
     CourseService courseService;
 
-    public LessonResponse createLesson(LessonCreationRequest request, String courseId) {
-        var course = courseRepository.findById(courseId);
+    public LessonResponse createLesson(LessonCreationRequest request) {
+        var course = courseRepository.findById(request.getCourseId());
         if (!course.isPresent()) {
             throw new AppException(ErrorCode.COURSE_NOT_FOUND);
         }
         Lesson lesson = lessonMapper.toLesson(request);
-        courseService.addLessonToCourse(courseId, lesson.getId());
+        courseService.addLessonToCourse(request.getCourseId(), lesson.getId());
         return lessonMapper.toLessonResponse(lessonRepository.save(lesson));
     }
 
@@ -45,6 +45,8 @@ public class LessonService {
         if (!course.isPresent()) {
             throw new AppException(ErrorCode.COURSE_NOT_FOUND);
         }
+
         return courseRepository.findCourseById(courseId).getLessonId().stream().toList();
     }
+
 }

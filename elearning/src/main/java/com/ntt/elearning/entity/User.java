@@ -29,6 +29,7 @@ public class User {
 
     @ManyToMany
     Set<Role> roles;
-
+    @ManyToMany
+    Set<Course> courses;
     boolean accepted;
 }

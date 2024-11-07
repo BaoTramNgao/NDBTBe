@@ -4,4 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ntt.elearning.entity.Result;
 
-public interface ResultRepository extends JpaRepository<Result, String> {}
+import java.util.Optional;
+
+public interface ResultRepository extends JpaRepository<Result, String> {
+    Optional<Result> findResultById(String resultId);
+}

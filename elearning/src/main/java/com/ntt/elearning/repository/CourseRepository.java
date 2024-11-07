@@ -7,8 +7,5 @@ import com.ntt.elearning.entity.Course;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, String> {
-
-    boolean existsByCourseTitle(String title);
-
     Course findCourseById(String id);
 }

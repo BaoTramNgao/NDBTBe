@@ -3,6 +3,10 @@ package com.ntt.elearning.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.ntt.elearning.dto.request.SignUpCourseRequest;
+import com.ntt.elearning.dto.response.CourseResponse;
+import com.ntt.elearning.dto.response.SignUpCourseResponse;
+import com.ntt.elearning.repository.CourseRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +38,7 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
+    CourseRepository courseRepository;
 
     public UserResponse createUser(UserCreationRequest request) {
 
@@ -84,5 +89,20 @@ public class UserService {
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(
                 repository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
+    }
+
+    public UserResponse signUpCourse(SignUpCourseRequest request){
+        var context = SecurityContextHolder.getContext();
+        String username = context.getAuthentication().getName();
+        var user = repository.findUserByUsername(username);
+        if(user == null){
+            throw new AppException(ErrorCode.USER_NOT_EXISTED);
+        }
+        var course = courseRepository.findById(request.getCourseId());
+        if(course == null){
+            throw new AppException(ErrorCode.COURSE_NOT_FOUND);
+        }
+        user.getCourses().add(course.get());
+        return userMapper.toUserResponse(repository.save(user));
     }
 }

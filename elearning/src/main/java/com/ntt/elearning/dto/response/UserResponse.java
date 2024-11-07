@@ -3,6 +3,7 @@ package com.ntt.elearning.dto.response;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.ntt.elearning.entity.Course;
 import com.ntt.elearning.entity.Role;
 
 import lombok.*;
@@ -19,5 +20,6 @@ public class UserResponse {
     String firstName;
     String lastName;
     LocalDate dob;
+    Set<Course> courseId;
     Set<Role> roles;
 }
