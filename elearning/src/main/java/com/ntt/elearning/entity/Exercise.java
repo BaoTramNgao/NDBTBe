@@ -16,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Exercise {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
     String title;

@@ -32,7 +32,6 @@ public class CourseService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
-        if (courseRepository.existsByCourseTitle(request.getTitle())) throw new AppException(ErrorCode.TITLE_EXISTED);
         Course course = courseMapper.toCourse(request);
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }

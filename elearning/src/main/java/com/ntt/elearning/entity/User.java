@@ -29,6 +29,8 @@ public class User {
     @ManyToMany
     Set<Role> roles;
 
+    String type;
+
     String accepted;
 
     @ManyToMany

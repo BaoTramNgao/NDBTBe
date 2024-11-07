@@ -16,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class Question {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String questionText;
