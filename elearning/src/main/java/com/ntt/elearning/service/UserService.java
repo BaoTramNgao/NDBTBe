@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.Constant.PredefindRole;
 import com.ntt.elearning.Constant.StatusConstant;
+import com.ntt.elearning.dto.request.SignUpCourseRequest;
 import com.ntt.elearning.dto.request.UserCreationRequest;
 import com.ntt.elearning.dto.request.UserUpdateRequest;
 import com.ntt.elearning.dto.response.UserResponse;
@@ -19,6 +20,7 @@ import com.ntt.elearning.entity.User;
 import com.ntt.elearning.exception.AppException;
 import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.UserMapper;
+import com.ntt.elearning.repository.CourseRepository;
 import com.ntt.elearning.repository.RoleRepository;
 import com.ntt.elearning.repository.UserRepository;
 
@@ -35,6 +37,7 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
+    CourseRepository courseRepository;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (repository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_ALREADY_EXISTED);
@@ -97,5 +100,20 @@ public class UserService {
     public UserResponse getUser(String id) {
         return userMapper.toUserResponse(
                 repository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
+    }
+
+    public UserResponse signUpCourse(SignUpCourseRequest request) {
+        var context = SecurityContextHolder.getContext();
+        String username = context.getAuthentication().getName();
+        var user = repository.findUserByUsername(username);
+        if (user == null) {
+            throw new AppException(ErrorCode.USER_NOT_EXISTED);
+        }
+        var course = courseRepository.findById(request.getCourseId());
+        if (course == null) {
+            throw new AppException(ErrorCode.COURSE_NOT_FOUND);
+        }
+        user.getCourses().add(course.get());
+        return userMapper.toUserResponse(repository.save(user));
     }
 }

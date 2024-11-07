@@ -1,3 +1,13 @@
 package com.ntt.elearning.dto.request;
 
-public class SignUpCourseRequest {}
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class SignUpCourseRequest {
+    String courseId;
+}

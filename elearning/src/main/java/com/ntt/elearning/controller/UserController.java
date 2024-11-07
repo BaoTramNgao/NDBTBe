@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import com.ntt.elearning.dto.request.SignUpCourseRequest;
 import com.ntt.elearning.dto.request.UserCreationRequest;
 import com.ntt.elearning.dto.request.UserUpdateRequest;
 import com.ntt.elearning.dto.response.ApiResponse;
@@ -75,6 +76,13 @@ public class UserController {
     ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody @Valid UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(userId, request))
+                .build();
+    }
+
+    @PutMapping("/signupcourse")
+    ApiResponse<UserResponse> signUpCourse(SignUpCourseRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.signUpCourse(request))
                 .build();
     }
 }

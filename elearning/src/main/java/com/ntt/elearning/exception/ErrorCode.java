@@ -26,8 +26,11 @@ public enum ErrorCode {
     EMAIL_INVALID(414, "Email is invalid", HttpStatus.BAD_REQUEST),
     EMAIL_EXISTED(415, "Email already exists", HttpStatus.CONFLICT),
     COURSE_NOT_FOUND(418, "Course not found", HttpStatus.NOT_FOUND),
-    LESSON_NOT_FOUND(422, "Course not found", HttpStatus.NOT_FOUND);
-
+    LESSON_NOT_FOUND(422, "Course not found", HttpStatus.NOT_FOUND),
+    EXERCISE_NOT_FOUND(423, "Exercises not found", HttpStatus.NOT_FOUND),
+    EXERCISE_NOT_ENOUGH_QUESTIONS(424, "Not enough questions in exercise", HttpStatus.BAD_REQUEST),
+    EXERCISE_ANSWER_NOT_CORRECT(425, "Incorrect answer", HttpStatus.BAD_REQUEST),
+    QUESTION_NOT_FOUND(426, "Question not found", HttpStatus.NOT_FOUND);
     int code;
     String message;
     HttpStatusCode httpStatusCode;

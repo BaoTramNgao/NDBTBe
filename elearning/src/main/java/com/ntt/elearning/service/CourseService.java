@@ -38,7 +38,7 @@ public class CourseService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse getCourseById(String id) {
-        return courseMapper.toCourseResponse(courseRepository.findCourseById(id));
+        return courseMapper.toCourseResponse(courseRepository.findById(id).get());
     }
 
     @PreAuthorize("hasRole('ADMIN')")

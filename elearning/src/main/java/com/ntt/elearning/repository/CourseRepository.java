@@ -7,6 +7,5 @@ import com.ntt.elearning.entity.Course;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, String> {
-
     Course findCourseById(String id);
 }
