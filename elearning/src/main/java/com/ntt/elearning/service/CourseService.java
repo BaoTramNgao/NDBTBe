@@ -29,10 +29,15 @@ public class CourseService {
     CourseRepository courseRepository;
     CourseMapper courseMapper;
     LessonRepository lessonRepository;
+    CloudinaryService cloudinaryService;
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
-        Course course = courseMapper.toCourse(request);
+                Course course = Course.builder()
+                         .title(request.getTitle())
+                         .description(request.getDescription())
+                         .thumbnailUrl(cloudinaryService.upload(request.getFile(),"course_folder").get("secure_url").toString())
+                         .build();
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 

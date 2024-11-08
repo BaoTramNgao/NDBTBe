@@ -17,5 +17,6 @@ public class CourseResponse {
     String title;
     String description;
     String status;
+    String thumbnailUrl;
     Set<Lesson> lessons;
 }

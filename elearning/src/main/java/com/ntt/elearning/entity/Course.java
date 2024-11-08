@@ -22,6 +22,7 @@ public class Course {
     String title;
     String description;
     String status;
+    String thumbnailUrl;
 
     @ManyToMany
     Set<Lesson> lessons;

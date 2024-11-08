@@ -2,6 +2,7 @@ package com.ntt.elearning.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -11,4 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class CourseCreationRequest {
     String title;
     String description;
+    MultipartFile file;
 }
