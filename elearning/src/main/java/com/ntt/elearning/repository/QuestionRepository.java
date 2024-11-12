@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.ntt.elearning.entity.Question;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, String> {
-    Question findQuestionById(Long id);
-}
+public interface QuestionRepository extends JpaRepository<Question, String> {}

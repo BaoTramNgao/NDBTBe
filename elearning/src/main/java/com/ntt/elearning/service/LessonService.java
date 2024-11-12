@@ -8,6 +8,7 @@ import com.ntt.elearning.Constant.LessonType;
 import com.ntt.elearning.dto.request.LessonCreationRequest;
 import com.ntt.elearning.dto.response.LessonResponse;
 import com.ntt.elearning.entity.Lesson;
+import com.ntt.elearning.entity.UrlFile;
 import com.ntt.elearning.exception.AppException;
 import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.CourseMapper;
@@ -30,13 +31,26 @@ public class LessonService {
     LessonRepository lessonRepository;
     LessonMapper lessonMapper;
     CourseService courseService;
+    CloudinaryService cloudinaryService;
 
     public LessonResponse createLesson(LessonCreationRequest request) {
         var course = courseRepository.findById(request.getCourseId());
         if (!course.isPresent()) {
             throw new AppException(ErrorCode.COURSE_NOT_FOUND);
         }
-        Lesson lesson = lessonMapper.toLesson(request);
+        Lesson lesson = Lesson.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .type(request.getType())
+                .build();
+        lesson.getVideoUrl()
+                .add(UrlFile.builder()
+                        .name("subject_" + request.getNumberOfLessons())
+                        .url(cloudinaryService
+                                .upload(request.getVideo(), "lesson_folder")
+                                .get("secure_url")
+                                .toString())
+                        .build());
         courseService.addLessonToCourse(request.getCourseId(), lesson.getId());
         return lessonMapper.toLessonResponse(lessonRepository.save(lesson));
     }

@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExerciseCreationRequest {
-    long questionId;
     String title;
+    String content;
+    int sequence_number;
 }

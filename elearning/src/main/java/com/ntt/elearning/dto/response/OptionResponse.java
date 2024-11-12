@@ -1,9 +1,5 @@
 package com.ntt.elearning.dto.response;
 
-import java.util.Set;
-
-import com.ntt.elearning.entity.UrlFile;
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,11 +8,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LessonResponse {
+public class OptionResponse {
     String id;
-    String title;
-    String description;
+    String text;
     String type;
-    int numberOfLessons;
-    Set<UrlFile> videosUrl;
+    boolean isCorrect;
 }

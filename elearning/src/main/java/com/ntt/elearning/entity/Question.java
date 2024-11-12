@@ -27,8 +27,7 @@ public class Question {
     @ManyToMany
     Set<Category> categories;
 
-    @Column(nullable = false)
-    private String correctAnswer;
+    String url;
 
     int score;
 }

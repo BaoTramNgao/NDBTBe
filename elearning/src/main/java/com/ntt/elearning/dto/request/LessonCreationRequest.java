@@ -1,5 +1,7 @@
 package com.ntt.elearning.dto.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,5 +13,8 @@ import lombok.experimental.FieldDefaults;
 public class LessonCreationRequest {
     String courseId;
     String title;
-    String description;
+    String content;
+    String type;
+    int numberOfLessons;
+    MultipartFile video;
 }

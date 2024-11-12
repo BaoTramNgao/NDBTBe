@@ -1,7 +1,5 @@
 package com.ntt.elearning.entity;
 
-import java.util.Set;
-
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -14,17 +12,10 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @Builder
-public class Exercise {
+public class UrlFile {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    String title;
-    String content;
-    int sequence_number;
-
-    @ManyToMany
-    Set<Question> questions;
-
-    int result;
+    String name;
+    String url;
 }

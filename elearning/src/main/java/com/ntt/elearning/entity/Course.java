@@ -22,8 +22,13 @@ public class Course {
     String title;
     String description;
     String status;
-    String thumbnailUrl;
+
+    @OneToOne
+    UrlFile thumbnailUrl;
+
+    @OneToMany
+    Set<Lesson> lessons;
 
     @ManyToMany
-    Set<Lesson> lessons;
+    Set<Exercise> exercises;
 }

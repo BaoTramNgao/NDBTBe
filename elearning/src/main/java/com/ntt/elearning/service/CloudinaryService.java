@@ -2,7 +2,6 @@ package com.ntt.elearning.service;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,13 +16,9 @@ public class CloudinaryService {
 
     private final Cloudinary cloudinary;
 
-    public Map upload(MultipartFile file,String folder) {
+    public Map upload(MultipartFile file, String folder) {
         try {
-            Map data = this.cloudinary
-                    .uploader()
-                    .upload(
-                            file.getBytes(),
-                            Map.of("folder", folder));
+            Map data = this.cloudinary.uploader().upload(file.getBytes(), Map.of("folder", folder));
             return data;
         } catch (IOException io) {
             throw new RuntimeException("Image upload fail");
