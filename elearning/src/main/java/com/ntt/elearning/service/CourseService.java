@@ -33,11 +33,14 @@ public class CourseService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
-                Course course = Course.builder()
-                         .title(request.getTitle())
-                         .description(request.getDescription())
-                         .thumbnailUrl(cloudinaryService.upload(request.getFile(),"course_folder").get("secure_url").toString())
-                         .build();
+        Course course = Course.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .thumbnailUrl(cloudinaryService
+                        .upload(request.getFile(), "course_folder")
+                        .get("secure_url")
+                        .toString())
+                .build();
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 

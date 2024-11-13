@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.ntt.elearning.entity.Exercise;
 
 @Repository
-public interface ExerciseRepository extends JpaRepository<Exercise, String> {
-    Exercise findExerciseById(String exercise);
-}
+public interface ExerciseRepository extends JpaRepository<Exercise, String> {}

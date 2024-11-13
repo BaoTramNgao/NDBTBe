@@ -15,5 +15,5 @@ import lombok.experimental.FieldDefaults;
 public class ExerciseResponse {
     String id;
     String title;
-    Set<Question> questionIds;
+    Set<Question> question;
 }
