@@ -1,6 +1,10 @@
 package com.ntt.elearning.dto.request;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Getter
@@ -9,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExerciseCreationRequest {
-    String question;
     String title;
+    String content;
+    int sequence_number;
 }

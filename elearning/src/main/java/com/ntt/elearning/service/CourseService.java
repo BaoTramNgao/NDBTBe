@@ -2,6 +2,7 @@ package com.ntt.elearning.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.ntt.elearning.dto.request.CourseCreationRequest;
 import com.ntt.elearning.dto.response.CourseResponse;
 import com.ntt.elearning.entity.Course;
 import com.ntt.elearning.entity.Lesson;
+import com.ntt.elearning.entity.UrlFile;
 import com.ntt.elearning.exception.AppException;
 import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.CourseMapper;
@@ -33,14 +35,19 @@ public class CourseService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
+
         Course course = Course.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .thumbnailUrl(cloudinaryService
-                        .upload(request.getFile(), "course_folder")
+                .build();
+        course.setThumbnailUrl(UrlFile.builder()
+                .id(UUID.randomUUID().toString())
+                .url(cloudinaryService
+                        .upload(request.getThumbnail(), "course_folder")
                         .get("secure_url")
                         .toString())
-                .build();
+                .name(course.getId() + "_url")
+                .build());
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 

@@ -20,6 +20,7 @@ public class UserResponse {
     String firstName;
     String lastName;
     LocalDate dob;
-    Set<Course> courseId;
+    String email;
+    Set<Course> course;
     Set<Role> roles;
 }

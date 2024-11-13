@@ -126,10 +126,10 @@ public class AuthenticationService {
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
-                .issuer("devteria.com")
+                .issuer("swb.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                        Instant.now().plus(VALID_DURATION, ChronoUnit.HOURS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))
                 .build();
@@ -157,7 +157,7 @@ public class AuthenticationService {
                         .getJWTClaimsSet()
                         .getIssueTime()
                         .toInstant()
-                        .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS)
+                        .plus(REFRESHABLE_DURATION, ChronoUnit.HOURS)
                         .toEpochMilli())
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
 

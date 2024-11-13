@@ -22,9 +22,11 @@ public class User {
 
     String username;
     String password;
-    String name;
-    String email;
+    String firstName;
+    String lastName;
+
     LocalDate dob;
+    String email;
 
     @ManyToMany
     Set<Role> roles;

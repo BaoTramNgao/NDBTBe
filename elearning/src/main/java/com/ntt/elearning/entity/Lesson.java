@@ -22,10 +22,8 @@ public class Lesson {
     String title;
     String content;
     String type;
+    int numberOfLessons;
 
-    @ManyToMany
-    Set<Video> videos;
-
-    @ManyToMany
-    Set<Exercise> exercises;
+    @OneToMany
+    Set<UrlFile> VideoUrl;
 }
