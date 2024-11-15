@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -50,5 +52,10 @@ public class ExerciseService {
                 .orElseThrow(() -> new AppException(ErrorCode.QUESTION_NOT_FOUND));
         exercise.getQuestions().add(question);
         exerciseRepository.save(exercise);
+    }
+    public List<ExerciseResponse> getAllExercises() {
+        return exerciseRepository.findAll().stream()
+                .map(exerciseMapper::toExerciseResponse)
+                .toList();
     }
 }

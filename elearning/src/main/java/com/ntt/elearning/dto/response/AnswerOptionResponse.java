@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Answer_optionResponse {
+public class AnswerOptionResponse {
     String id;
     String text;
     boolean isCorrect;

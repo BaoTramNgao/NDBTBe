@@ -23,4 +23,5 @@ public class Answer_Option {
 
     @Column(nullable = false)
     private boolean isCorrect;
+
 }

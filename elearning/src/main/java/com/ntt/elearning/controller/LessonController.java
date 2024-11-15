@@ -3,10 +3,7 @@ package com.ntt.elearning.controller;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ntt.elearning.dto.request.LessonCreationRequest;
 import com.ntt.elearning.dto.response.ApiResponse;
@@ -17,6 +14,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
@@ -33,5 +32,12 @@ public class LessonController {
         return ApiResponse.<LessonResponse>builder()
                 .result(lessonService.createLesson(request))
                 .build();
+    }
+
+    @GetMapping
+    ApiResponse<List<LessonResponse>> getAllLessonsByCourseId(@RequestParam String courseId) {
+        return ApiResponse.<List<LessonResponse>>builder()
+               .result(lessonService.getAllLessonsByCourseId(courseId))
+               .build();
     }
 }

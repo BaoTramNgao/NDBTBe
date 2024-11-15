@@ -17,5 +17,5 @@ public class QuestionResponse {
     String questionText;
     String correctAnswer;
     int score;
-    Set<Answer_Option> answers;
+    Set<Answer_Option> options;
 }

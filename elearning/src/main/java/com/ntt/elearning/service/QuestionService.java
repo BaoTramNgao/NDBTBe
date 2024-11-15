@@ -1,8 +1,14 @@
 package com.ntt.elearning.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
+import com.ntt.elearning.entity.Exercise;
+import com.ntt.elearning.entity.Lesson;
+import com.ntt.elearning.exception.AppException;
+import com.ntt.elearning.exception.ErrorCode;
+import com.ntt.elearning.repository.AnswerOptionRepository;
 import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.dto.request.QuestionRequest;
@@ -24,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class QuestionService {
     QuestionRepository questionRepository;
     QuestionMapper questionMapper;
+    AnswerOptionRepository answerOptionRepository;
 
     public QuestionResponse createQuestion(QuestionRequest request) {
         Question question = questionMapper.toQuestion(request);
@@ -40,5 +47,18 @@ public class QuestionService {
         Question savedQuestion = questionRepository.save(question);
 
         return questionMapper.toQuestionResponse(savedQuestion);
+    }
+    public void addOptionToQuestion(String questionId, String answerOptionId) {
+        var question = questionRepository
+                .findById(questionId)
+                .orElseThrow(() -> new AppException(ErrorCode.QUESTION_NOT_FOUND));
+        Answer_Option option = answerOptionRepository
+                .findById(answerOptionId)
+                .orElseThrow(() -> new AppException(ErrorCode.ANSWER_OPTION_NOT_FOUND));
+        question.getOptions().add(option);
+        questionRepository.save(question);
+    }
+    public void deleteQuestion(String questionId) {
+        questionRepository.deleteById(questionId);
     }
 }
