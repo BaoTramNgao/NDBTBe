@@ -1,8 +1,6 @@
 package com.ntt.elearning.dto.request;
 
-import java.util.Set;
-
-import com.ntt.elearning.entity.Answer_Option;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -14,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class QuestionRequest {
     String questionText;
-    String correctAnswer;
     int score;
-    Set<Answer_Option> options;
+    MultipartFile file;
 }

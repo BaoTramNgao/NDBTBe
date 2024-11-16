@@ -15,5 +15,7 @@ import lombok.experimental.FieldDefaults;
 public class ExerciseResponse {
     String id;
     String title;
+    String content;
+    int sequence_number;
     Set<Question> question;
 }

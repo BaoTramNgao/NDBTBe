@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.ntt.elearning.dto.request.CourseCreationRequest;
@@ -23,8 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class CourseController {
-    @Autowired
-    private CourseService courseService;
+    CourseService courseService;
 
     @PostMapping
     ApiResponse<CourseResponse> createCourse(@RequestBody @Valid CourseCreationRequest request) {
@@ -34,14 +32,14 @@ public class CourseController {
                 .build();
     }
 
-    @GetMapping("/courses")
+    @GetMapping()
     ApiResponse<List<CourseResponse>> getAllCourses() {
         return ApiResponse.<List<CourseResponse>>builder()
                 .result(courseService.getAllCourses())
                 .build();
     }
 
-    @GetMapping("/courses/{id}")
+    @GetMapping("/{id}")
     ApiResponse<CourseResponse> getCourseById(@PathVariable String id) {
         return ApiResponse.<CourseResponse>builder()
                 .result(courseService.getCourseById(id))

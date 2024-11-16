@@ -1,6 +1,5 @@
 package com.ntt.elearning.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.ntt.elearning.dto.request.QuestionRequest;
@@ -14,12 +13,12 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/exercise")
+@RequestMapping("/questions")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j
 public class QuestionController {
-    @Autowired
+
     QuestionService questionService;
 
     @PostMapping
@@ -28,5 +27,4 @@ public class QuestionController {
                 .result(questionService.createQuestion(request))
                 .build();
     }
-
 }

@@ -24,10 +24,7 @@ public class Question {
     @OneToMany
     Set<Answer_Option> options;
 
-    @ManyToMany
-    Set<Category> categories;
-
-    String url;
+    // String url;
 
     int score;
 }

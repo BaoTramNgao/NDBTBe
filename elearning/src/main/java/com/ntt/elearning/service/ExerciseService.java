@@ -1,5 +1,7 @@
 package com.ntt.elearning.service;
 
+import java.util.List;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +53,7 @@ public class ExerciseService {
         exercise.getQuestions().add(question);
         exerciseRepository.save(exercise);
     }
+
     public List<ExerciseResponse> getAllExercises() {
         return exerciseRepository.findAll().stream()
                 .map(exerciseMapper::toExerciseResponse)

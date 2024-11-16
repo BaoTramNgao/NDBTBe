@@ -15,7 +15,6 @@ import lombok.experimental.FieldDefaults;
 public class QuestionResponse {
     String id;
     String questionText;
-    String correctAnswer;
     int score;
     Set<Answer_Option> options;
 }

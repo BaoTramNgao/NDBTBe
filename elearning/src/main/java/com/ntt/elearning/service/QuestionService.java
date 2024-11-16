@@ -1,21 +1,15 @@
 package com.ntt.elearning.service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import com.ntt.elearning.entity.Exercise;
-import com.ntt.elearning.entity.Lesson;
-import com.ntt.elearning.exception.AppException;
-import com.ntt.elearning.exception.ErrorCode;
-import com.ntt.elearning.repository.AnswerOptionRepository;
 import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.dto.request.QuestionRequest;
 import com.ntt.elearning.dto.response.QuestionResponse;
 import com.ntt.elearning.entity.Answer_Option;
 import com.ntt.elearning.entity.Question;
+import com.ntt.elearning.exception.AppException;
+import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.QuestionMapper;
+import com.ntt.elearning.repository.AnswerOptionRepository;
 import com.ntt.elearning.repository.QuestionRepository;
 
 import lombok.AccessLevel;
@@ -35,19 +29,11 @@ public class QuestionService {
     public QuestionResponse createQuestion(QuestionRequest request) {
         Question question = questionMapper.toQuestion(request);
 
-        Set<Answer_Option> answerOptions = new HashSet<>();
-        for (Answer_Option optionRequest : request.getOptions()) {
-            Answer_Option answerOption = new Answer_Option();
-            answerOption.setText(optionRequest.getText());
-            answerOption.setCorrect(optionRequest.isCorrect());
-            answerOptions.add(answerOption);
-        }
-        question.setOptions(answerOptions);
-
         Question savedQuestion = questionRepository.save(question);
 
         return questionMapper.toQuestionResponse(savedQuestion);
     }
+
     public void addOptionToQuestion(String questionId, String answerOptionId) {
         var question = questionRepository
                 .findById(questionId)
@@ -58,6 +44,7 @@ public class QuestionService {
         question.getOptions().add(option);
         questionRepository.save(question);
     }
+
     public void deleteQuestion(String questionId) {
         questionRepository.deleteById(questionId);
     }

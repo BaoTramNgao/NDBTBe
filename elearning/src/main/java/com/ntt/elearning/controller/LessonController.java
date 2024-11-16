@@ -1,8 +1,9 @@
 package com.ntt.elearning.controller;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.ntt.elearning.dto.request.LessonCreationRequest;
@@ -15,29 +16,26 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/lessons")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j
 public class LessonController {
 
-    @Autowired
     LessonService lessonService;
 
-    @PostMapping("/courses")
+    @PostMapping
     ApiResponse<LessonResponse> createLesson(@RequestBody @Valid LessonCreationRequest request) {
         return ApiResponse.<LessonResponse>builder()
                 .result(lessonService.createLesson(request))
                 .build();
     }
 
-    @GetMapping
-    ApiResponse<List<LessonResponse>> getAllLessonsByCourseId(@RequestParam String courseId) {
+    @GetMapping("/{courseId}")
+    ApiResponse<List<LessonResponse>> getAllLessonsByCourseId(@PathVariable String courseId) {
         return ApiResponse.<List<LessonResponse>>builder()
-               .result(lessonService.getAllLessonsByCourseId(courseId))
-               .build();
+                .result(lessonService.getAllLessonsByCourseId(courseId))
+                .build();
     }
 }

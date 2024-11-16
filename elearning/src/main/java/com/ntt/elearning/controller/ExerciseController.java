@@ -2,7 +2,6 @@ package com.ntt.elearning.controller;
 
 import jakarta.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ExerciseController {
-    @Autowired
-    private ExerciseService exerciseService;
+    ExerciseService exerciseService;
 
-    @PostMapping("/exercise")
+    @PostMapping
     ApiResponse<ExerciseResponse> createExercise(@RequestBody @Valid ExerciseCreationRequest request) {
         return ApiResponse.<ExerciseResponse>builder()
                 .result(exerciseService.createExercise(request))
