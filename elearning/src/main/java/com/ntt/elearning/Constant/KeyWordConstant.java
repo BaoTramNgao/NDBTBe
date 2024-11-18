@@ -1,6 +1,7 @@
 package com.ntt.elearning.Constant;
 
 public class KeyWordConstant {
-    public static final String USER_ID_KEYWORD = "STSWB_";
-    public static final String TEACHER_ID_KEYWORD = "TESWB_";
+    public static final String COURSE_ID_KEYWORD = "SWBCO";
+    public static final String LESSON_ID_KEYWORD = "SWBLE";
+    public static final String EXERCISE_ID_KEYWORD = "SWBEX";
 }

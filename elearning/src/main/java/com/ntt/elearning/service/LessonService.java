@@ -2,6 +2,7 @@ package com.ntt.elearning.service;
 
 import java.util.List;
 
+import com.ntt.elearning.Constant.KeyWordConstant;
 import org.springframework.stereotype.Service;
 
 import com.ntt.elearning.Constant.LessonType;
@@ -38,19 +39,15 @@ public class LessonService {
         if (!course.isPresent()) {
             throw new AppException(ErrorCode.COURSE_NOT_FOUND);
         }
+        var courseNumber = courseRepository.count()+1;
+        String courseId= KeyWordConstant.COURSE_ID_KEYWORD+courseNumber;
         Lesson lesson = Lesson.builder()
+                .id(courseId+"_"+KeyWordConstant.LESSON_ID_KEYWORD+request.getNumberOfLessons())
                 .title(request.getTitle())
                 .content(request.getContent())
                 .type(request.getType())
                 .build();
-        lesson.getVideoUrl()
-                .add(UrlFile.builder()
-                        .name("subject_" + request.getNumberOfLessons())
-                        .url(cloudinaryService
-                                .upload(request.getVideo(), "lesson_folder")
-                                .get("secure_url")
-                                .toString())
-                        .build());
+
         courseService.addLessonToCourse(request.getCourseId(), lesson.getId());
         return lessonMapper.toLessonResponse(lessonRepository.save(lesson));
     }

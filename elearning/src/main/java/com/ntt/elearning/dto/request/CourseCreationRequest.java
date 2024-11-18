@@ -13,5 +13,4 @@ import lombok.experimental.FieldDefaults;
 public class CourseCreationRequest {
     String title;
     String description;
-    MultipartFile thumbnail;
 }
