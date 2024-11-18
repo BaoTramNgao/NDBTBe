@@ -11,5 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class OptionCreationRequest {
     String text;
     String type;
-    boolean isCorrect;
+    boolean is_correct;
 }

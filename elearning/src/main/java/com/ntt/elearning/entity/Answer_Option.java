@@ -15,12 +15,11 @@ import lombok.experimental.FieldDefaults;
 public class Answer_Option {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    String id;
 
-    private String text;
+    String text;
 
-    private String type;
+    String type;
 
-    @Column(nullable = false)
-    private boolean isCorrect;
+    boolean is_correct;
 }

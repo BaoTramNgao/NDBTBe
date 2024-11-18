@@ -1,26 +1,22 @@
 package com.ntt.elearning.service;
 
-import java.security.Key;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
-import com.ntt.elearning.Constant.KeyWordConstant;
-import com.ntt.elearning.repository.UrlRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import com.ntt.elearning.Constant.KeyWordConstant;
 import com.ntt.elearning.dto.request.CourseCreationRequest;
 import com.ntt.elearning.dto.response.CourseResponse;
 import com.ntt.elearning.entity.Course;
 import com.ntt.elearning.entity.Lesson;
-import com.ntt.elearning.entity.UrlFile;
 import com.ntt.elearning.exception.AppException;
 import com.ntt.elearning.exception.ErrorCode;
 import com.ntt.elearning.mapper.CourseMapper;
 import com.ntt.elearning.repository.CourseRepository;
 import com.ntt.elearning.repository.LessonRepository;
+import com.ntt.elearning.repository.UrlRepository;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,19 +32,19 @@ public class CourseService {
     CourseMapper courseMapper;
     LessonRepository lessonRepository;
     UrlRepository urlRepository;
+
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
-        String courseId = KeyWordConstant.COURSE_ID_KEYWORD+courseRepository.count()+1;
-        var listLesson =lessonRepository.findAllByIdLike(courseId);
-        var urlFile = urlRepository.findByIdLike(courseId);
+        String courseId = KeyWordConstant.COURSE_ID_KEYWORD + courseRepository.count() + 1;
+        //        var listLesson = lessonRepository.findAllByIdLike(courseId);
+        //        var urlFile = urlRepository.findByIdLike(courseId);
 
         Course course = Course.builder()
                 .id(courseId)
-                .title(request.getTitle())
-                .description(request.getDescription())
+                //                .title(request.getTitle())
+                //                .description(request.getDescription())
                 .build();
-        course.getLessons().addAll(listLesson.stream().collect(Collectors.toSet()));
-        course.setThumbnailUrl(urlFile.get());
+        //        course.setThumbnailUrl(urlFile.get());
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 
@@ -79,5 +75,9 @@ public class CourseService {
         }
         course.get().getLessons().add(lesson.get());
         courseRepository.save(course.get());
+    }
+
+    public CourseResponse updateCourse() {
+        return null;
     }
 }
