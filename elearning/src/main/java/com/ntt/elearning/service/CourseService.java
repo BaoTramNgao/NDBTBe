@@ -2,7 +2,6 @@ package com.ntt.elearning.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -37,16 +36,15 @@ public class CourseService {
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
         String courseId = KeyWordConstant.COURSE_ID_KEYWORD + courseRepository.count() + 1;
-        var listLesson = lessonRepository.findAllByIdLike(courseId);
-        var urlFile = urlRepository.findByIdLike(courseId);
+        //        var listLesson = lessonRepository.findAllByIdLike(courseId);
+        //        var urlFile = urlRepository.findByIdLike(courseId);
 
         Course course = Course.builder()
                 .id(courseId)
-                .title(request.getTitle())
-                .description(request.getDescription())
+                //                .title(request.getTitle())
+                //                .description(request.getDescription())
                 .build();
-        course.getLessons().addAll(listLesson.stream().collect(Collectors.toSet()));
-        course.setThumbnailUrl(urlFile.get());
+        //        course.setThumbnailUrl(urlFile.get());
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 
@@ -77,5 +75,9 @@ public class CourseService {
         }
         course.get().getLessons().add(lesson.get());
         courseRepository.save(course.get());
+    }
+
+    public CourseResponse updateCourse() {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package com.ntt.elearning.service;
 
-import java.util.*;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +32,30 @@ public class UrlService {
             String url = uploadResult.get("url").toString();
             UrlFile urlFile = UrlFile.builder()
                     .id(courseId + "_url")
+                    .name("course_image_url")
+                    .url(url)
+                    .build();
+            urlRepository.save(urlFile);
+
+            UrlResponse urlResponse = UrlResponse.builder()
+                    .id(urlFile.getId())
+                    .name(urlFile.getName())
+                    .url(urlFile.getUrl())
+                    .build();
+            return urlResponse;
+        } catch (RuntimeException e) {
+            // Handle exceptions appropriately, e.g., log the error, throw a custom exception
+            throw new RuntimeException("Image upload failed: " + e.getMessage());
+        }
+    }
+
+    public UrlResponse uploadLessonVideo(MultipartFile file) {
+        try {
+            String lessonID = KeyWordConstant.COURSE_ID_KEYWORD + courseRepository.count() + 1;
+            Map uploadResult = cloudinaryService.upload(file, "course_folder");
+            String url = uploadResult.get("url").toString();
+            UrlFile urlFile = UrlFile.builder()
+                    .id(lessonID + "_url")
                     .name("course_image_url")
                     .url(url)
                     .build();

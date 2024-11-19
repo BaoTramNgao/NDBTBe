@@ -1,12 +1,15 @@
 package com.ntt.elearning.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ntt.elearning.dto.request.AnswerOptionRequest;
-import com.ntt.elearning.dto.response.AnswerOptionResponse;
+import com.ntt.elearning.dto.request.OptionCreationRequest;
 import com.ntt.elearning.dto.response.ApiResponse;
+import com.ntt.elearning.dto.response.OptionResponse;
 import com.ntt.elearning.service.OptionService;
 
 import lombok.AccessLevel;
@@ -23,8 +26,8 @@ public class AnswerOptionController {
     OptionService answerOptionService;
 
     @PostMapping
-    ApiResponse<AnswerOptionResponse> createAnswerOption(AnswerOptionRequest request) {
-        return ApiResponse.<AnswerOptionResponse>builder()
+    ApiResponse<OptionResponse> createAnswerOption(@RequestBody @Valid OptionCreationRequest request) {
+        return ApiResponse.<OptionResponse>builder()
                 .result(answerOptionService.createOption(request))
                 .build();
     }

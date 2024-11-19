@@ -12,5 +12,5 @@ public class OptionResponse {
     String id;
     String text;
     String type;
-    boolean isCorrect;
+    boolean is_correct;
 }

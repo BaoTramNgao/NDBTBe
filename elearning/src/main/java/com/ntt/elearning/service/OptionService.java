@@ -1,9 +1,12 @@
 package com.ntt.elearning.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
-import com.ntt.elearning.dto.request.AnswerOptionRequest;
+import com.ntt.elearning.dto.request.OptionCreationRequest;
 import com.ntt.elearning.dto.response.AnswerOptionResponse;
+import com.ntt.elearning.dto.response.OptionResponse;
 import com.ntt.elearning.entity.Answer_Option;
 import com.ntt.elearning.mapper.AnswerOptionMapper;
 import com.ntt.elearning.repository.AnswerOptionRepository;
@@ -23,10 +26,20 @@ public class OptionService {
     AnswerOptionMapper answerOptionMapper;
     QuestionRepository questionRepository;
 
-    public AnswerOptionResponse createOption(AnswerOptionRequest request) {
-        Answer_Option option = answerOptionMapper.toAnswerOption(request);
-        option = answerOptionRepository.save(option);
-        return answerOptionMapper.toAnswerOptionResponse(option);
+    public OptionResponse createOption(OptionCreationRequest request) {
+        var option = Answer_Option.builder()
+                .id(UUID.randomUUID().toString())
+                .text(request.getText())
+                .type(request.getType())
+                .is_correct(request.is_correct())
+                .build();
+        var optionResponse = OptionResponse.builder()
+                .text(option.getText())
+                .type(option.getType())
+                .is_correct(option.is_correct())
+                .build();
+        answerOptionRepository.save(option);
+        return optionResponse;
     }
 
     public AnswerOptionResponse getOptionById(String id) {
