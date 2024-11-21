@@ -27,18 +27,20 @@ public class OptionService {
     QuestionRepository questionRepository;
 
     public OptionResponse createOption(OptionCreationRequest request) {
-        var option = Answer_Option.builder()
-                .id(UUID.randomUUID().toString())
-                .text(request.getText())
-                .type(request.getType())
-                .is_correct(request.is_correct())
-                .build();
-        var optionResponse = OptionResponse.builder()
-                .text(option.getText())
-                .type(option.getType())
-                .is_correct(option.is_correct())
-                .build();
+        var option = new Answer_Option();
+        option.setId(UUID.randomUUID().toString());
+        option.setText(request.getText());
+        option.setType(request.getType());
+        option.setCorrect(request.isCorrect());
+        log.info("request: "+request.isCorrect());
+        log.info("option: "+option.isCorrect());
         answerOptionRepository.save(option);
+        var optionResponse =new OptionResponse();
+        optionResponse.setText(option.getText());
+        optionResponse.setType(option.getType());
+        optionResponse.setCorrect(option.isCorrect());
+
+
         return optionResponse;
     }
 

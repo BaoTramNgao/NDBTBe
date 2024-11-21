@@ -25,9 +25,9 @@ public class UrlService {
     UrlRepository urlRepository;
     CourseRepository courseRepository;
 
-    public UrlResponse uploadCourseImage(MultipartFile file) {
+    public UrlResponse uploadCourseImage(MultipartFile file,String courseId) {
         try {
-            String courseId = KeyWordConstant.COURSE_ID_KEYWORD + courseRepository.count() + 1;
+
             Map uploadResult = cloudinaryService.upload(file, "course_folder");
             String url = uploadResult.get("url").toString();
             UrlFile urlFile = UrlFile.builder()

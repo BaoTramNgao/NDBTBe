@@ -26,7 +26,7 @@ public class AnswerOptionController {
     OptionService answerOptionService;
 
     @PostMapping
-    ApiResponse<OptionResponse> createAnswerOption(@RequestBody @Valid OptionCreationRequest request) {
+    ApiResponse<OptionResponse> createAnswerOption(@RequestBody  OptionCreationRequest request) {
         return ApiResponse.<OptionResponse>builder()
                 .result(answerOptionService.createOption(request))
                 .build();
