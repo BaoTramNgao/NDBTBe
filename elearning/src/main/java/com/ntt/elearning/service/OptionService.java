@@ -32,14 +32,13 @@ public class OptionService {
         option.setText(request.getText());
         option.setType(request.getType());
         option.setCorrect(request.isCorrect());
-        log.info("request: "+request.isCorrect());
-        log.info("option: "+option.isCorrect());
+        log.info("request: " + request.isCorrect());
+        log.info("option: " + option.isCorrect());
         answerOptionRepository.save(option);
-        var optionResponse =new OptionResponse();
+        var optionResponse = new OptionResponse();
         optionResponse.setText(option.getText());
         optionResponse.setType(option.getType());
         optionResponse.setCorrect(option.isCorrect());
-
 
         return optionResponse;
     }

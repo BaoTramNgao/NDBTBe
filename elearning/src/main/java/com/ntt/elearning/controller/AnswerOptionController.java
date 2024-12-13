@@ -1,7 +1,5 @@
 package com.ntt.elearning.controller;
 
-import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +24,7 @@ public class AnswerOptionController {
     OptionService answerOptionService;
 
     @PostMapping
-    ApiResponse<OptionResponse> createAnswerOption(@RequestBody  OptionCreationRequest request) {
+    ApiResponse<OptionResponse> createAnswerOption(@RequestBody OptionCreationRequest request) {
         return ApiResponse.<OptionResponse>builder()
                 .result(answerOptionService.createOption(request))
                 .build();

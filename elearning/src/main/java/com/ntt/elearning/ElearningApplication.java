@@ -23,5 +23,6 @@ public class ElearningApplication {
         config.put("api_key", "544818839576415");
         config.put("api_secret", "wM-q_n3w69O-YrF7Zk60XSzPNrE");
         return new Cloudinary(config);
+        //
     }
 }

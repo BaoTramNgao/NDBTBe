@@ -36,15 +36,7 @@ public class CourseService {
     @PreAuthorize("hasRole('ADMIN')")
     public CourseResponse createCourse(CourseCreationRequest request) {
         String courseId = KeyWordConstant.COURSE_ID_KEYWORD + courseRepository.count() + 1;
-        //        var listLesson = lessonRepository.findAllByIdLike(courseId);
-        //        var urlFile = urlRepository.findByIdLike(courseId);
-
-        Course course = Course.builder()
-                .id(courseId)
-                //                .title(request.getTitle())
-                //                .description(request.getDescription())
-                .build();
-        //        course.setThumbnailUrl(urlFile.get());
+        Course course = Course.builder().id(courseId).build();
         return courseMapper.toCourseResponse(courseRepository.save(course));
     }
 

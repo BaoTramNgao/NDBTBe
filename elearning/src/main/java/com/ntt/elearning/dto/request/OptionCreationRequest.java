@@ -1,6 +1,7 @@
 package com.ntt.elearning.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -28,6 +29,7 @@ public class OptionCreationRequest {
     public void setType(String type) {
         this.type = type;
     }
+
     @JsonProperty("isCorrect")
     public boolean isCorrect() {
         return correct;

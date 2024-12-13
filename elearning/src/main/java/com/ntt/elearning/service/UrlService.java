@@ -25,7 +25,7 @@ public class UrlService {
     UrlRepository urlRepository;
     CourseRepository courseRepository;
 
-    public UrlResponse uploadCourseImage(MultipartFile file,String courseId) {
+    public UrlResponse uploadCourseImage(MultipartFile file, String courseId) {
         try {
 
             Map uploadResult = cloudinaryService.upload(file, "course_folder");
